@@ -1,5 +1,3 @@
-react-native.config.js
-
 module.exports = {
   dependencies: {
     'react-native-gesture-handler': {
