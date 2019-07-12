@@ -2,29 +2,31 @@ import React from 'react';
 import { Animated, View, Text, ButtonText, Button,  AppRegistry, Image, ImageBackground, StyleSheet,  TextInput} from 'react-native';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'; // Version can be specified in package.json
 
+
+//Hello World Animation 
 class FadeInView extends React.Component {
   state = {
-    fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
+    fadeAnim: new Animated.Value(0),  
   }
 
   componentDidMount() {
-    Animated.timing(                  // Animate over time
-      this.state.fadeAnim,            // The animated value to drive
+    Animated.timing(                  
+      this.state.fadeAnim,            
       {
-        toValue: 1,                   // Animate to opacity: 1 (opaque)
-        duration: 8000,              // Make it take a while
+        toValue: 1,                   
+        duration: 8000,              
       }
-    ).start();                        // Starts the animation
+    ).start();                      
   }
 
   render() {
     let { fadeAnim } = this.state;
 
     return (
-      <Animated.View                 // Special animatable View
+      <Animated.View                
         style={{
           ...this.props.style,
-          opacity: fadeAnim,         // Bind opacity to animated value
+          opacity: fadeAnim,         
         }}
       >
         {this.props.children}
@@ -32,9 +34,10 @@ class FadeInView extends React.Component {
     );
   }
 }
+//End of Hello World Animation 
 
 
-
+//Styles 
 const styles = StyleSheet.create({
   greetingText: {
     color: 'white',
@@ -47,19 +50,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 
-  buttonContainer: {
-    margin: 20
-  },
-  
-  alternativeLayoutButtonContainer: {
-    margin: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-
- 
 });
+//End of Styles 
 
+
+//HomeScreen 
 class HomeScreen extends React.Component {
   render() {
     let pic = {
@@ -91,8 +86,9 @@ class HomeScreen extends React.Component {
     );
   }  
 }
-  
+//End of HomeScreen 
 
+//Second page (aka DetailsPage)
 class DetailsScreen extends React.Component {
    constructor(props) {
     super(props);
@@ -112,8 +108,9 @@ render() {
     );
   }  
 }
+//End of Second page 
 
-
+//HomePage and DetailsPage Directory
 const AppNavigator = createStackNavigator({
   Home: {
     screen: HomeScreen,
