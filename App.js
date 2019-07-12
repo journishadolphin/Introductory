@@ -1,32 +1,30 @@
 import React from 'react';
-import { Animated, View, Text, ButtonText, Button,  AppRegistry, Image, ImageBackground, StyleSheet,  TextInput} from 'react-native';
+import { Animated, View, Text, ButtonText, Button,  AppRegistry, Image, ImageBackground, StyleSheet, TextInput} from 'react-native';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'; // Version can be specified in package.json
 
-
-//Hello World Animation 
 class FadeInView extends React.Component {
   state = {
-    fadeAnim: new Animated.Value(0),  
+    fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
   }
 
   componentDidMount() {
-    Animated.timing(                  
-      this.state.fadeAnim,            
+    Animated.timing(                  // Animate over time
+      this.state.fadeAnim,            // The animated value to drive
       {
-        toValue: 1,                   
-        duration: 8000,              
+        toValue: 1,                   // Animate to opacity: 1 (opaque)
+        duration: 8000,              // Make it take a while
       }
-    ).start();                      
+    ).start();                        // Starts the animation
   }
 
   render() {
     let { fadeAnim } = this.state;
 
     return (
-      <Animated.View                
+      <Animated.View                 // Special animatable View
         style={{
           ...this.props.style,
-          opacity: fadeAnim,         
+          opacity: fadeAnim,         // Bind opacity to animated value
         }}
       >
         {this.props.children}
@@ -34,10 +32,9 @@ class FadeInView extends React.Component {
     );
   }
 }
-//End of Hello World Animation 
 
 
-//Styles 
+
 const styles = StyleSheet.create({
   greetingText: {
     color: 'white',
@@ -50,11 +47,17 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
 
+  input: {
+    height: 40,
+    borderColor: 'gray', 
+    borderWidth: 1, 
+    width: 250,
+    margin: 5
+  }
+
+ 
 });
-//End of Styles 
 
-
-//HomeScreen 
 class HomeScreen extends React.Component {
   render() {
     let pic = {
@@ -86,31 +89,61 @@ class HomeScreen extends React.Component {
     );
   }  
 }
-//End of HomeScreen 
-
-//Second page (aka DetailsPage)
-class DetailsScreen extends React.Component {
-   constructor(props) {
-    super(props);
-    this.state = {text: ''};
-  }
-render() {
-    return (
-       <View style={{padding: 10}}>
-        <TextInput
-          style={{height: 40}}
-          placeholder="Type here to translate!"
-          onChangeText={(text) => this.setState({text})}
-          value={this.state.text}
-        />
   
+
+class DetailsScreen extends React.Component {
+  constructor(props) {
+  super(props);
+  this.state = {
+    name: "",
+    email: "",
+    password: ""
+  }
+}
+   render() {
+    return (
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => this.setState({name: text})}
+          placeholder="Name"
+         />
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => this.setState({email: text})}
+          placeholder="E-Mail"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => this.setState({password:text})}
+          secureTextEntry={true}
+          placeholder="Password"
+        />
+        <Button
+          onPress={this.submit}
+          title="Submit"
+          color="#841584"
+        />
+        
+        <Button
+          title="Go Back"
+          onPress={() => {
+            this.props.navigation.dispatch(StackActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Home' })
+              ],
+            }))
+          }}
+        />
+        
+        
       </View>
     );
   }  
 }
-//End of Second page 
 
-//HomePage and DetailsPage Directory
+
 const AppNavigator = createStackNavigator({
   Home: {
     screen: HomeScreen,
@@ -124,7 +157,6 @@ const AppNavigator = createStackNavigator({
 });
 
 export default createAppContainer(AppNavigator);
-
 
 
 
