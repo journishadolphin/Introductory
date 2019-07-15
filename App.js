@@ -1,10 +1,10 @@
 import React from 'react';
-import { Animated, View, Text, ButtonText, Button,  AppRegistry, Image, ImageBackground, StyleSheet, TextInput} from 'react-native';
+import { Animated, View, Text, ButtonText, Button,  AppRegistry, Image, ImageBackground, StyleSheet, TextInput, ActivityIndicator} from 'react-native';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'; // Version can be specified in package.json
 
 class FadeInView extends React.Component {
   state = {
-    fadeAnim: new Animated.Value(0),  // Initial value for opacity: 0
+    fadeAnim: new Animated.Value(0),  
   }
 
   componentDidMount() {
@@ -53,7 +53,14 @@ const styles = StyleSheet.create({
     borderWidth: 1, 
     width: 250,
     margin: 5
-  }
+  },
+
+   activityIndicator: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: 80
+   },
 
  
 });
@@ -102,25 +109,50 @@ class DetailsScreen extends React.Component {
 }
    render() {
     return (
+  
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{fontSize: 30, textAlign: 'center', margin: 10, color: "black"}}>Sign Up </Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({name: text})}
-          placeholder="Name"
+          ref={ref => {this._nameInput = ref}}
+          placeholder=" Full Name"
+          autoFocus={true}
+          autoCapitalize="words"
+          autoCorrect={true}
+          keyboardType="default"
+          returnKeyType="next"
+          onSubmitEditing={this._next}
+          blurOnSubmit={false}
          />
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({email: text})}
-          placeholder="E-Mail"
+          ref={ref => {this._nameInput = ref}}
+          placeholder=" Email"
+          autoFocus={true}
+          autoCapitalize="words"
+          autoCorrect={true}
+          keyboardType="default"
+          returnKeyType="next"
+          onSubmitEditing={this._next}
+          blurOnSubmit={false}
         />
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({password:text})}
           secureTextEntry={true}
-          placeholder="Password"
+          placeholder="  Password"
         />
         <Button
-          onPress={this.submit}
+           onPress={() => {
+            this.props.navigation.dispatch(StackActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Confirmation' })
+              ],
+            }))
+          }}
           title="Submit"
           color="#841584"
         />
@@ -137,10 +169,41 @@ class DetailsScreen extends React.Component {
           }}
         />
         
-        
+           
       </View>
     );
   }  
+}
+
+
+
+//Confirmation Screen 
+
+class ConScreen extends React.Component {
+	state = { animating: true }
+   
+   closeActivityIndicator = () => setTimeout(() => this.setState({
+   animating: false }), 4000)
+   
+   componentDidMount = () => this.closeActivityIndicator()
+
+	render() {
+			const animating = this.state.animating
+		return (
+			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+			<ActivityIndicator
+               animating = {animating}
+               color = '#bc2b78'
+               size = "large"
+               style = {styles.activityIndicator}/>
+			<FadeInView> 
+			<Text> You've Signed Up </Text> 
+			</FadeInView>
+			</View>
+
+			
+			);
+	}
 }
 
 
@@ -151,6 +214,10 @@ const AppNavigator = createStackNavigator({
   Details: {
     screen: DetailsScreen,
   },
+  Confirmation: {
+    screen: ConScreen,
+  },
+
 
 }, {
     initialRouteName: 'Home',
