@@ -180,27 +180,44 @@ class DetailsScreen extends React.Component {
 //Confirmation Screen 
 
 class ConScreen extends React.Component {
-	state = { animating: true }
+	constructor(){
+		super()
+		this.state= {
+			showME: true
+		}
+
+	}
    
-   closeActivityIndicator = () => setTimeout(() => this.setState({
-   animating: false }), 4000)
+   componentWillMount()
+   {
+   	setTimeout(() => {
+   	this.setState({
+   		showME: false
+ })
+   	},
+   		3000)
+   }
    
-   componentDidMount = () => this.closeActivityIndicator()
 
 	render() {
-			const animating = this.state.animating
+	
 		return (
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-			<ActivityIndicator
-               animating = {animating}
-               color = '#bc2b78'
-               size = "large"
-               style = {styles.activityIndicator}/>
-			<FadeInView> 
-			<Text> You've Signed Up </Text> 
-			</FadeInView>
-			</View>
+			{
+				this.state.showME ?
+				<ActivityIndicator color = '#bc2b78' size = "large"/>
+				:
+				 <View>
+					<FadeInView> 
+						<Text> You're Signed Up! </Text> 
+					</FadeInView>
+				</View>
 
+
+			}
+			
+               </View>
+              
 			
 			);
 	}
