@@ -1,30 +1,32 @@
 import React from 'react';
-import { Animated, View, Text, ButtonText, Button,  AppRegistry, Image, ImageBackground, StyleSheet, TextInput, ActivityIndicator} from 'react-native';
+import { Animated, View, Text, ButtonText, Button,  AppRegistry, Image, ImageBackground, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity} from 'react-native';
 import { createAppContainer, createStackNavigator, StackActions, NavigationActions } from 'react-navigation'; // Version can be specified in package.json
 
+
+//Text Fade in Animation 
 class FadeInView extends React.Component {
   state = {
     fadeAnim: new Animated.Value(0),  
   }
 
   componentDidMount() {
-    Animated.timing(                  // Animate over time
-      this.state.fadeAnim,            // The animated value to drive
+    Animated.timing(                  
+      this.state.fadeAnim,            
       {
-        toValue: 1,                   // Animate to opacity: 1 (opaque)
-        duration: 8000,              // Make it take a while
+        toValue: 1,
+        duration: 6000,              
       }
-    ).start();                        // Starts the animation
+    ).start();                        
   }
 
   render() {
     let { fadeAnim } = this.state;
 
     return (
-      <Animated.View                 // Special animatable View
+      <Animated.View                 
         style={{
           ...this.props.style,
-          opacity: fadeAnim,         // Bind opacity to animated value
+          opacity: fadeAnim,        
         }}
       >
         {this.props.children}
@@ -32,9 +34,10 @@ class FadeInView extends React.Component {
     );
   }
 }
+// End of Text Fade in Animation 
 
 
-
+//StyleSheets
 const styles = StyleSheet.create({
   greetingText: {
     color: 'white',
@@ -62,9 +65,25 @@ const styles = StyleSheet.create({
       height: 80
    },
 
+    button: {
+    marginTop: 20,
+    marginBottom: 10,
+    width: 260,
+    alignItems: 'center',
+    backgroundColor: '#2196F3'
+  },
+
+  buttonText: {
+    padding: 10,
+    color: 'white'
+  },
+
  
 });
+//End of StyleSheets
 
+
+//HomeScreen
 class HomeScreen extends React.Component {
   render() {
     let pic = {
@@ -75,7 +94,7 @@ class HomeScreen extends React.Component {
 
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <FadeInView style={{width: 250, height: 60, backgroundColor: 'powderblue'}}>
-          <Text style={{fontSize: 30, textAlign: 'center', margin: 10}}>Hello, World </Text>
+          <Text style={{fontFamily: 'Al Nile', fontSize: 30, textAlign: 'center', margin: 10}}>Hello, World </Text>
         </FadeInView>
 
           
@@ -91,13 +110,18 @@ class HomeScreen extends React.Component {
             }))
           }}
         />
+
+
+
       </View>
       </ImageBackground>
     );
   }  
 }
-  
+//End of HomeScreen 
 
+
+//Details Page (aka Sign Up Screen)
 class DetailsScreen extends React.Component {
   constructor(props) {
   super(props);
@@ -109,9 +133,12 @@ class DetailsScreen extends React.Component {
 }
    render() {
     return (
-  
+      
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{fontSize: 30, textAlign: 'center', margin: 10, color: "black"}}>Sign Up </Text>
+      <View style={{width: 250, height: 60, marginBottom: 50, backgroundColor: 'powderblue'}}>
+          <Text style={{fontSize: 30, textAlign: 'center', margin: 10}}>Hello, World </Text>
+      </View>
+      <Text style={{fontSize: 25, textAlign: 'center', margin: 10, color: "black"}}>Sign Up </Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({name: text})}
@@ -144,42 +171,56 @@ class DetailsScreen extends React.Component {
           secureTextEntry={true}
           placeholder="  Password"
         />
-        <Button
-           onPress={() => {
-            this.props.navigation.dispatch(StackActions.reset({
-              index: 0,
-              actions: [
-                NavigationActions.navigate({ routeName: 'Confirmation' })
-              ],
-            }))
-          }}
-          title="Submit"
-          color="#841584"
-        />
-        
-        <Button
-          title="Go Back"
+
+         <TouchableOpacity 
           onPress={() => {
             this.props.navigation.dispatch(StackActions.reset({
               index: 0,
               actions: [
-                NavigationActions.navigate({ routeName: 'Home' })
+                NavigationActions.navigate({ routeName: 'signConfirmation' })
               ],
             }))
           }}
-        />
+          >
+        <View style={styles.button}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </View>
+        </TouchableOpacity>
+      
+
+        
+        <Text> 
+        <Text> Already signed up? Click </Text>
+		<Text style = {{color: "blue",}}
+          onPress={() => {
+            this.props.navigation.dispatch(StackActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'Login' })
+              ],
+            }))
+          }}
+          >
+          Here
+        </Text>
+
+
+
+
+
+        </Text>    
+
         
            
       </View>
     );
   }  
 }
+//End of Details Page 
 
 
-
-//Confirmation Screen 
-
-class ConScreen extends React.Component {
+// Sign up Confirmation Screen 
+class signConScreen extends React.Component {
 	constructor(){
 		super()
 		this.state= {
@@ -195,7 +236,7 @@ class ConScreen extends React.Component {
    		showME: false
  })
    	},
-   		3000)
+   		2000)
    }
    
 
@@ -205,7 +246,7 @@ class ConScreen extends React.Component {
 			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 			{
 				this.state.showME ?
-				<ActivityIndicator color = '#bc2b78' size = "large"/>
+				<ActivityIndicator color = 'steelblue' size = "large"/>
 				:
 				 <View>
 					<FadeInView> 
@@ -222,8 +263,109 @@ class ConScreen extends React.Component {
 			);
 	}
 }
+//End of Confirmation Screen 
+
+//Login Screen
+class LoginScreen extends React.Component {
+  constructor(props) {
+  super(props);
+  this.state = {
+    email: "",
+    password: ""
+  }
+}
+   render() {
+    return (
+  
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text style={{fontSize: 30, textAlign: 'center', margin: 10, color: "black"}}>Login</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => this.setState({email: text})}
+          ref={ref => {this._nameInput = ref}}
+          placeholder=" Email"
+          autoFocus={true}
+          autoCapitalize="words"
+          autoCorrect={true}
+          keyboardType="default"
+          returnKeyType="next"
+          onSubmitEditing={this._next}
+          blurOnSubmit={false}
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => this.setState({password:text})}
+          secureTextEntry={true}
+          placeholder="  Password"
+        />
+        <Button
+           onPress={() => {
+            this.props.navigation.dispatch(StackActions.reset({
+              index: 0,
+              actions: [
+                NavigationActions.navigate({ routeName: 'logConfirmation' })
+              ],
+            }))
+          }}
+          title="Submit"
+          color="#841584"
+        />   
+        
+           
+      </View>
+    );
+  }  
+}
+//End of Login Screen
 
 
+// Login Confirmation Screen  
+class logConScreen extends React.Component {
+	constructor(){
+		super()
+		this.state= {
+			showME: true
+		}
+
+	}
+   
+   componentWillMount()
+   {
+   	setTimeout(() => {
+   	this.setState({
+   		showME: false
+ })
+   	},
+   		2000)
+   }
+   
+
+	render() {
+	
+		return (
+			<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+			{
+				this.state.showME ?
+				<ActivityIndicator color = 'steelblue' size = "large"/>
+				:
+				 <View>
+					<FadeInView> 
+						<Text> You're Logged in! </Text> 
+					</FadeInView>
+				</View>
+
+
+			}
+			
+               </View>
+              
+			
+			);
+	}
+}
+// End of Login Confirmation Screen 
+
+//Screen Navigator constants 
 const AppNavigator = createStackNavigator({
   Home: {
     screen: HomeScreen,
@@ -231,17 +373,26 @@ const AppNavigator = createStackNavigator({
   Details: {
     screen: DetailsScreen,
   },
-  Confirmation: {
-    screen: ConScreen,
+  signConfirmation: {
+    screen: signConScreen,
   },
-
+  Login: {
+  	screen: LoginScreen,
+  },
+  logConfirmation: {
+  	screen: logConScreen,
+  }
 
 }, {
     initialRouteName: 'Home',
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+	}
 });
 
 export default createAppContainer(AppNavigator);
 
-
+//End of Screen Navigator Constants 
 
 
