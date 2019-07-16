@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
 
   input: {
     height: 40,
-    borderColor: 'gray', 
+    borderColor: 'white', 
     borderWidth: 1, 
     width: 250,
     margin: 5
@@ -93,8 +93,8 @@ class HomeScreen extends React.Component {
        <ImageBackground source={pic} style={{width: '100%', height: '100%'}}>
 
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <FadeInView style={{width: 250, height: 60, backgroundColor: 'powderblue'}}>
-          <Text style={{fontFamily: 'Al Nile', fontSize: 30, textAlign: 'center', margin: 10}}>Hello, World </Text>
+        <FadeInView style={{width: 250, height: 60, backgroundColor: "#2196F3"}}>
+          <Text style={{fontFamily: 'HelveticaNeue-Light', fontSize: 30, textAlign: 'center', margin: 10, color: "white"}}>Hello, World </Text>
         </FadeInView>
 
           
@@ -132,18 +132,22 @@ class DetailsScreen extends React.Component {
   }
 }
    render() {
+    let pic = {
+      url: 'https://media.istockphoto.com/videos/blue-gradient-texture-video-id461177054?s=640x640'
+    };
     return (
-      
+      <ImageBackground source={pic} style={{width: '100%', height: '100%'}}>
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <View style={{width: 250, height: 60, marginBottom: 50, backgroundColor: 'powderblue'}}>
-          <Text style={{fontSize: 30, textAlign: 'center', margin: 10}}>Hello, World </Text>
+      <View style={{width: 250, height: 60, marginBottom: 60, backgroundColor: '#2196F3'}}>
+          <Text style={{fontFamily: 'HelveticaNeue-Light', fontSize: 30, textAlign: 'center', margin: 10, color: "white" }}>Hello, World </Text>
       </View>
-      <Text style={{fontSize: 25, textAlign: 'center', margin: 10, color: "black"}}>Sign Up </Text>
+      <Text style={{fontFamily: 'HelveticaNeue-Light', fontSize: 25, textAlign: 'center', margin: 10, color: 'white'}}>Sign Up </Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({name: text})}
           ref={ref => {this._nameInput = ref}}
-          placeholder=" Full Name"
+          placeholder="  Full Name"
+          placeholderTextColor="white"
           autoFocus={true}
           autoCapitalize="words"
           autoCorrect={true}
@@ -156,7 +160,8 @@ class DetailsScreen extends React.Component {
           style={styles.input}
           onChangeText={(text) => this.setState({email: text})}
           ref={ref => {this._nameInput = ref}}
-          placeholder=" Email"
+          placeholder="  Email"
+          placeholderTextColor="white"
           autoFocus={true}
           autoCapitalize="words"
           autoCorrect={true}
@@ -170,6 +175,7 @@ class DetailsScreen extends React.Component {
           onChangeText={(text) => this.setState({password:text})}
           secureTextEntry={true}
           placeholder="  Password"
+          placeholderTextColor="white"
         />
 
          <TouchableOpacity 
@@ -190,8 +196,8 @@ class DetailsScreen extends React.Component {
 
         
         <Text> 
-        <Text> Already signed up? Click </Text>
-		<Text style = {{color: "blue",}}
+        <Text style = {{fontFamily: 'HelveticaNeue-Light', color: 'white',}}> Already signed up? Click </Text>
+		<Text style = {{color: "powderblue", fontFamily: 'HelveticaNeue-Light'}}
           onPress={() => {
             this.props.navigation.dispatch(StackActions.reset({
               index: 0,
@@ -213,6 +219,7 @@ class DetailsScreen extends React.Component {
         
            
       </View>
+      </ImageBackground>
     );
   }  
 }
@@ -250,7 +257,7 @@ class signConScreen extends React.Component {
 				:
 				 <View>
 					<FadeInView> 
-						<Text> You're Signed Up! </Text> 
+						<Text style = {{fontFamily: 'HelveticaNeue-Light'}}> You're Signed Up! </Text> 
 					</FadeInView>
 				</View>
 
@@ -265,6 +272,7 @@ class signConScreen extends React.Component {
 }
 //End of Confirmation Screen 
 
+
 //Login Screen
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -275,15 +283,22 @@ class LoginScreen extends React.Component {
   }
 }
    render() {
+    let pic = {
+      url: 'https://media.istockphoto.com/videos/blue-gradient-texture-video-id461177054?s=640x640'
+    };
     return (
-  
+      <ImageBackground source={pic} style={{width: '100%', height: '100%'}}>
+
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{fontSize: 30, textAlign: 'center', margin: 10, color: "black"}}>Login</Text>
+      <View style={{width: 250, height: 60, marginBottom: 60, backgroundColor: '#2196F3'}}>
+          <Text style={{fontFamily: 'HelveticaNeue-Light', fontSize: 30, textAlign: 'center', margin: 10, color: "white" }}>Hello, World </Text>
+      </View>
+      <Text style={{fontFamily: 'HelveticaNeue-Light', fontSize: 30, textAlign: 'center', margin: 10, color: "white"}}>Login</Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({email: text})}
           ref={ref => {this._nameInput = ref}}
-          placeholder=" Email"
+          placeholder="  Email"
           autoFocus={true}
           autoCapitalize="words"
           autoCorrect={true}
@@ -291,15 +306,17 @@ class LoginScreen extends React.Component {
           returnKeyType="next"
           onSubmitEditing={this._next}
           blurOnSubmit={false}
+          placeholderTextColor="white"
         />
         <TextInput
           style={styles.input}
           onChangeText={(text) => this.setState({password:text})}
           secureTextEntry={true}
           placeholder="  Password"
+          placeholderTextColor="white"
         />
-        <Button
-           onPress={() => {
+        <TouchableOpacity 
+          onPress={() => {
             this.props.navigation.dispatch(StackActions.reset({
               index: 0,
               actions: [
@@ -307,12 +324,15 @@ class LoginScreen extends React.Component {
               ],
             }))
           }}
-          title="Submit"
-          color="#841584"
-        />   
+          >
+        <View style={styles.button}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </View>
+        </TouchableOpacity> 
         
            
       </View>
+      </ImageBackground>
     );
   }  
 }
